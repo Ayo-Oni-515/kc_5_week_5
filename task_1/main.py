@@ -32,9 +32,19 @@ async def create_a_student(student_data: StudentCreateModel):
         )
 
 
-@app.get("/students/{name}")
+@app.get("/students/{name}",
+         status_code=status.HTTP_200_OK,
+         response_model=StudentModel)
 async def get_by_student_name(name: str):
     """path parameter based endpoint for fetching a single student"""
+    try:
+        student_data = get_student(name)
+        return student_data
+    except KeyError:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"{name}'s data doesn't exist!"
+        )
 
 
 @app.get("/students/",
