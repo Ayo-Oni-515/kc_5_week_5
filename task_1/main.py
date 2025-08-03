@@ -37,6 +37,15 @@ async def get_by_student_name(name: str):
     """path parameter based endpoint for fetching a single student"""
 
 
-@app.get("/students/")
-async def get_all_students():
+@app.get("/students/",
+         status_code=status.HTTP_200_OK,
+         response_model=AllStudentModel)
+async def get_students():
     """returns all registered students"""
+    try:
+        return get_all_students()
+    except Exception:
+        raise HTTPException(
+            status_code=404,
+            detail="Error retrieving data!"
+        )
