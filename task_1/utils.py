@@ -2,6 +2,7 @@ import os
 import json
 
 from student import Student
+from schema import StudentModel, AllStudentModel
 
 
 def is_json_file(file_path: str = "./students.json") -> bool:
@@ -33,7 +34,7 @@ def load_from_json(file_path: str = "./students.json") -> dict:
                 # parse existing data in json file
                 retrieved_data = json.load(data_file)
             except Exception:
-                # returns an empty list if file is empty
+                # returns an empty dictionary if file is empty
                 retrieved_data = {}
 
     else:
@@ -62,15 +63,31 @@ def add_student(student_name: str, student_subjects: dict[str, float]):
         # raise an error if the student's data exists.
         raise KeyError
     else:
+        # creates a new student data in students.json
         new_student: Student = Student(student_name, student_subjects)
         save_to_json(new_student.json)
 
         return new_student.json
 
 
-def get_student():
+def get_student(student_name: str, file_path: str = "./students.json"):
     """returns a student based on name provided"""
+    if does_student_exist(student_name):
+        # return student details
+        all_students: dict = load_from_json(file_path)
+        student_data = StudentModel(
+            name=student_name,
+            subjects=all_students[student_name]["subjects"],
+            average=all_students[student_name]["average"],
+            grade=all_students[student_name]["grade"]
+        )
+        return student_data.model_dump()
+
+    raise KeyError
 
 
-def get_all_students():
+def get_all_students(file_path: str = "./students.json"):
     """returns all students in students.json"""
+    all_students: AllStudentModel = AllStudentModel(
+        data=load_from_json(file_path))
+    return all_students
