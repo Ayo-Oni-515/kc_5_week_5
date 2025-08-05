@@ -5,6 +5,7 @@ class ProductModel(BaseModel):
     name: str
     price: float
     qty: int
+    amount: float
 
 
 class AllProductModel(BaseModel):

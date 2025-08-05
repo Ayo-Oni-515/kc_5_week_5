@@ -88,7 +88,9 @@ def add_product_to_cart(
             new_product = ProductModel(
                 name=Product.In_memory[product_id]["name"],
                 price=Product.In_memory[product_id]["price"],
-                qty=product_qty
+                qty=product_qty,
+                amount=round(
+                    Product.In_memory[product_id]["price"] * product_qty, 2)
             ).model_dump()
             product = {product_id: new_product}
             save_to_json(product)
