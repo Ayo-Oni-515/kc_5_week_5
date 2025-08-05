@@ -1,7 +1,14 @@
 {
-    "p002": {
-        "name": "milk",
-        "price": 80.0,
-        "qty": 2
+    "p003": {
+        "name": "butter",
+        "price": 30.5,
+        "qty": 5,
+        "amount": 152.5
+    },
+    "p010": {
+        "name": "pepper",
+        "price": 40.65,
+        "qty": 5,
+        "amount": 203.25
     }
 }
